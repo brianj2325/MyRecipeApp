@@ -1,0 +1,10 @@
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\bin\Debug\MyRecipesApp.exe.config
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\bin\Debug\MyRecipesApp.exe
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\bin\Debug\MyRecipesApp.pdb
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.csprojAssemblyReference.cache
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.AddRecipeForm.resources
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.Properties.Resources.resources
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.csproj.GenerateResource.cache
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.csproj.CoreCompileInputs.cache
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.exe
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.pdb

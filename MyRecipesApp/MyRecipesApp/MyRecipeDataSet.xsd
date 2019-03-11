@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="MyRecipeDataSet" targetNamespace="http://tempuri.org/MyRecipeDataSet.xsd" xmlns:mstns="http://tempuri.org/MyRecipeDataSet.xsd" xmlns="http://tempuri.org/MyRecipeDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="MyRecipeDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="MyRecipeDataSet" msprop:Generator_UserDSName="MyRecipeDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Recipe" msprop:Generator_TableClassName="RecipeDataTable" msprop:Generator_TableVarName="tableRecipe" msprop:Generator_TablePropName="Recipe" msprop:Generator_RowDeletingName="RecipeRowDeleting" msprop:Generator_RowChangingName="RecipeRowChanging" msprop:Generator_RowEvHandlerName="RecipeRowChangeEventHandler" msprop:Generator_RowDeletedName="RecipeRowDeleted" msprop:Generator_UserTableName="Recipe" msprop:Generator_RowChangedName="RecipeRowChanged" msprop:Generator_RowEvArgName="RecipeRowChangeEvent" msprop:Generator_RowClassName="RecipeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RecipeID" msprop:Generator_ColumnVarNameInTable="columnRecipeID" msprop:Generator_ColumnPropNameInRow="RecipeID" msprop:Generator_ColumnPropNameInTable="RecipeIDColumn" msprop:Generator_UserColumnName="RecipeID" type="xs:string" minOccurs="0" />
+              <xs:element name="RecipeName" msprop:Generator_ColumnVarNameInTable="columnRecipeName" msprop:Generator_ColumnPropNameInRow="RecipeName" msprop:Generator_ColumnPropNameInTable="RecipeNameColumn" msprop:Generator_UserColumnName="RecipeName" type="xs:string" minOccurs="0" />
+              <xs:element name="RecipeCategory" msprop:Generator_ColumnVarNameInTable="columnRecipeCategory" msprop:Generator_ColumnPropNameInRow="RecipeCategory" msprop:Generator_ColumnPropNameInTable="RecipeCategoryColumn" msprop:Generator_UserColumnName="RecipeCategory" type="xs:string" minOccurs="0" />
+              <xs:element name="RecipeDescription" msprop:Generator_ColumnVarNameInTable="columnRecipeDescription" msprop:Generator_ColumnPropNameInRow="RecipeDescription" msprop:Generator_ColumnPropNameInTable="RecipeDescriptionColumn" msprop:Generator_UserColumnName="RecipeDescription" type="xs:string" minOccurs="0" />
+              <xs:element name="Username" msprop:Generator_ColumnVarNameInTable="columnUsername" msprop:Generator_ColumnPropNameInRow="Username" msprop:Generator_ColumnPropNameInTable="UsernameColumn" msprop:Generator_UserColumnName="Username" type="xs:string" minOccurs="0" />
+              <xs:element name="DateSubmitted" msprop:Generator_ColumnVarNameInTable="columnDateSubmitted" msprop:Generator_ColumnPropNameInRow="DateSubmitted" msprop:Generator_ColumnPropNameInTable="DateSubmittedColumn" msprop:Generator_UserColumnName="DateSubmitted" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Ingredients" msprop:Generator_TableClassName="IngredientsDataTable" msprop:Generator_TableVarName="tableIngredients" msprop:Generator_TablePropName="Ingredients" msprop:Generator_RowDeletingName="IngredientsRowDeleting" msprop:Generator_RowChangingName="IngredientsRowChanging" msprop:Generator_RowEvHandlerName="IngredientsRowChangeEventHandler" msprop:Generator_RowDeletedName="IngredientsRowDeleted" msprop:Generator_UserTableName="Ingredients" msprop:Generator_RowChangedName="IngredientsRowChanged" msprop:Generator_RowEvArgName="IngredientsRowChangeEvent" msprop:Generator_RowClassName="IngredientsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="IngredientID" msprop:Generator_ColumnVarNameInTable="columnIngredientID" msprop:Generator_ColumnPropNameInRow="IngredientID" msprop:Generator_ColumnPropNameInTable="IngredientIDColumn" msprop:Generator_UserColumnName="IngredientID" type="xs:string" minOccurs="0" />
+              <xs:element name="IngredientName" msprop:Generator_ColumnVarNameInTable="columnIngredientName" msprop:Generator_ColumnPropNameInRow="IngredientName" msprop:Generator_ColumnPropNameInTable="IngredientNameColumn" msprop:Generator_UserColumnName="IngredientName" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="RecipeIngredients" msprop:Generator_TableClassName="RecipeIngredientsDataTable" msprop:Generator_TableVarName="tableRecipeIngredients" msprop:Generator_TablePropName="RecipeIngredients" msprop:Generator_RowDeletingName="RecipeIngredientsRowDeleting" msprop:Generator_RowChangingName="RecipeIngredientsRowChanging" msprop:Generator_RowEvHandlerName="RecipeIngredientsRowChangeEventHandler" msprop:Generator_RowDeletedName="RecipeIngredientsRowDeleted" msprop:Generator_UserTableName="RecipeIngredients" msprop:Generator_RowChangedName="RecipeIngredientsRowChanged" msprop:Generator_RowEvArgName="RecipeIngredientsRowChangeEvent" msprop:Generator_RowClassName="RecipeIngredientsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RecipeIngredientID" msprop:Generator_ColumnVarNameInTable="columnRecipeIngredientID" msprop:Generator_ColumnPropNameInRow="RecipeIngredientID" msprop:Generator_ColumnPropNameInTable="RecipeIngredientIDColumn" msprop:Generator_UserColumnName="RecipeIngredientID" type="xs:string" minOccurs="0" />
+              <xs:element name="RecipeID" msprop:Generator_ColumnVarNameInTable="columnRecipeID" msprop:Generator_ColumnPropNameInRow="RecipeID" msprop:Generator_ColumnPropNameInTable="RecipeIDColumn" msprop:Generator_UserColumnName="RecipeID" type="xs:string" minOccurs="0" />
+              <xs:element name="IngredientID" msprop:Generator_ColumnVarNameInTable="columnIngredientID" msprop:Generator_ColumnPropNameInRow="IngredientID" msprop:Generator_ColumnPropNameInTable="IngredientIDColumn" msprop:Generator_UserColumnName="IngredientID" type="xs:string" minOccurs="0" />
+              <xs:element name="IngredientAmount" msprop:Generator_ColumnVarNameInTable="columnIngredientAmount" msprop:Generator_ColumnPropNameInRow="IngredientAmount" msprop:Generator_ColumnPropNameInTable="IngredientAmountColumn" msprop:Generator_UserColumnName="IngredientAmount" type="xs:string" minOccurs="0" />
+              <xs:element name="IngredientUnits" msprop:Generator_ColumnVarNameInTable="columnIngredientUnits" msprop:Generator_ColumnPropNameInRow="IngredientUnits" msprop:Generator_ColumnPropNameInTable="IngredientUnitsColumn" msprop:Generator_UserColumnName="IngredientUnits" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Directions" msprop:Generator_TableClassName="DirectionsDataTable" msprop:Generator_TableVarName="tableDirections" msprop:Generator_TablePropName="Directions" msprop:Generator_RowDeletingName="DirectionsRowDeleting" msprop:Generator_RowChangingName="DirectionsRowChanging" msprop:Generator_RowEvHandlerName="DirectionsRowChangeEventHandler" msprop:Generator_RowDeletedName="DirectionsRowDeleted" msprop:Generator_UserTableName="Directions" msprop:Generator_RowChangedName="DirectionsRowChanged" msprop:Generator_RowEvArgName="DirectionsRowChangeEvent" msprop:Generator_RowClassName="DirectionsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DirectionID" msprop:Generator_ColumnVarNameInTable="columnDirectionID" msprop:Generator_ColumnPropNameInRow="DirectionID" msprop:Generator_ColumnPropNameInTable="DirectionIDColumn" msprop:Generator_UserColumnName="DirectionID" type="xs:string" minOccurs="0" />
+              <xs:element name="DirectionNumber" msprop:Generator_ColumnVarNameInTable="columnDirectionNumber" msprop:Generator_ColumnPropNameInRow="DirectionNumber" msprop:Generator_ColumnPropNameInTable="DirectionNumberColumn" msprop:Generator_UserColumnName="DirectionNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="Direction" msprop:Generator_ColumnVarNameInTable="columnDirection" msprop:Generator_ColumnPropNameInRow="Direction" msprop:Generator_ColumnPropNameInTable="DirectionColumn" msprop:Generator_UserColumnName="Direction" type="xs:string" minOccurs="0" />
+              <xs:element name="RecipeID" msprop:Generator_ColumnVarNameInTable="columnRecipeID" msprop:Generator_ColumnPropNameInRow="RecipeID" msprop:Generator_ColumnPropNameInTable="RecipeIDColumn" msprop:Generator_UserColumnName="RecipeID" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TimeAndTemp" msprop:Generator_TableClassName="TimeAndTempDataTable" msprop:Generator_TableVarName="tableTimeAndTemp" msprop:Generator_TablePropName="TimeAndTemp" msprop:Generator_RowDeletingName="TimeAndTempRowDeleting" msprop:Generator_RowChangingName="TimeAndTempRowChanging" msprop:Generator_RowEvHandlerName="TimeAndTempRowChangeEventHandler" msprop:Generator_RowDeletedName="TimeAndTempRowDeleted" msprop:Generator_UserTableName="TimeAndTemp" msprop:Generator_RowChangedName="TimeAndTempRowChanged" msprop:Generator_RowEvArgName="TimeAndTempRowChangeEvent" msprop:Generator_RowClassName="TimeAndTempRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RecipeID" msprop:Generator_ColumnVarNameInTable="columnRecipeID" msprop:Generator_ColumnPropNameInRow="RecipeID" msprop:Generator_ColumnPropNameInTable="RecipeIDColumn" msprop:Generator_UserColumnName="RecipeID" type="xs:string" minOccurs="0" />
+              <xs:element name="PrepTime" msprop:Generator_ColumnVarNameInTable="columnPrepTime" msprop:Generator_ColumnPropNameInRow="PrepTime" msprop:Generator_ColumnPropNameInTable="PrepTimeColumn" msprop:Generator_UserColumnName="PrepTime" type="xs:string" minOccurs="0" />
+              <xs:element name="CookTime" msprop:Generator_ColumnVarNameInTable="columnCookTime" msprop:Generator_ColumnPropNameInRow="CookTime" msprop:Generator_ColumnPropNameInTable="CookTimeColumn" msprop:Generator_UserColumnName="CookTime" type="xs:string" minOccurs="0" />
+              <xs:element name="CookTemp" msprop:Generator_ColumnVarNameInTable="columnCookTemp" msprop:Generator_ColumnPropNameInRow="CookTemp" msprop:Generator_ColumnPropNameInTable="CookTempColumn" msprop:Generator_UserColumnName="CookTemp" type="xs:string" minOccurs="0" />
+              <xs:element name="TimeAndTempID" msprop:Generator_ColumnVarNameInTable="columnTimeAndTempID" msprop:Generator_ColumnPropNameInRow="TimeAndTempID" msprop:Generator_ColumnPropNameInTable="TimeAndTempIDColumn" msprop:Generator_UserColumnName="TimeAndTempID" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Recipe_RecipeIngredients" msdata:parent="Recipe" msdata:child="RecipeIngredients" msdata:parentkey="RecipeID" msdata:childkey="RecipeID" msprop:Generator_UserChildTable="RecipeIngredients" msprop:Generator_ChildPropName="GetRecipeIngredientsRows" msprop:Generator_UserRelationName="Recipe_RecipeIngredients" msprop:Generator_ParentPropName="RecipeRow" msprop:Generator_RelationVarName="relationRecipe_RecipeIngredients" msprop:Generator_UserParentTable="Recipe" />
+      <msdata:Relationship name="Ingredients_RecipeIngredients" msdata:parent="Ingredients" msdata:child="RecipeIngredients" msdata:parentkey="IngredientID" msdata:childkey="IngredientID" msprop:Generator_UserChildTable="RecipeIngredients" msprop:Generator_ChildPropName="GetRecipeIngredientsRows" msprop:Generator_UserRelationName="Ingredients_RecipeIngredients" msprop:Generator_ParentPropName="IngredientsRow" msprop:Generator_RelationVarName="relationIngredients_RecipeIngredients" msprop:Generator_UserParentTable="Ingredients" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>
