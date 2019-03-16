@@ -17,9 +17,31 @@ namespace MyRecipesApp
             InitializeComponent();
         }
 
-        private void btn_AddIngredients_Click(object sender, EventArgs e)
+        private void btn_Next_Click(object sender, EventArgs e)
         {
+            RecipeDataSet ds = new RecipeDataSet();
 
+            DataRow row = ds.Tables["recipeTable"].NewRow();
+            row["recipeName"] = txt_RecipeName.Text;
+            row["recipeCategory"] = cmb_Category.Text;
+            row["recipeDescription"] = txt_Description.Text;
+            ds.RecipeTable.Rows.Add(row);
+
+            AddIngredientsForm addIngredientsForm = new AddIngredientsForm(row["recipeID"].ToString(),txt_RecipeName.Text);
+            this.Hide();
+            addIngredientsForm.ShowDialog();
+            this.Close();
         }
+
+        private void btn_Cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+       
     }
+
+    
+
+    
 }
