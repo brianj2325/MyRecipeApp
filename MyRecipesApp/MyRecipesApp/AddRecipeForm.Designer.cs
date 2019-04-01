@@ -36,7 +36,7 @@
             this.cmb_Category = new System.Windows.Forms.ComboBox();
             this.txt_Description = new System.Windows.Forms.TextBox();
             this.btn_Cancel = new System.Windows.Forms.Button();
-            this.btn_AddIngredients = new System.Windows.Forms.Button();
+            this.btn_Next = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -88,6 +88,7 @@
             this.txt_RecipeName.Name = "txt_RecipeName";
             this.txt_RecipeName.Size = new System.Drawing.Size(308, 20);
             this.txt_RecipeName.TabIndex = 4;
+            this.txt_RecipeName.Text = "Sugar Cookies";
             // 
             // cmb_Category
             // 
@@ -104,6 +105,7 @@
             this.cmb_Category.Name = "cmb_Category";
             this.cmb_Category.Size = new System.Drawing.Size(308, 21);
             this.cmb_Category.TabIndex = 5;
+            this.cmb_Category.Text = "Desserts";
             // 
             // txt_Description
             // 
@@ -112,6 +114,7 @@
             this.txt_Description.Name = "txt_Description";
             this.txt_Description.Size = new System.Drawing.Size(307, 127);
             this.txt_Description.TabIndex = 6;
+            this.txt_Description.Text = "Recipe for sugar cookies";
             // 
             // btn_Cancel
             // 
@@ -121,16 +124,17 @@
             this.btn_Cancel.TabIndex = 7;
             this.btn_Cancel.Text = "Cancel";
             this.btn_Cancel.UseVisualStyleBackColor = true;
+            this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
             // 
-            // btn_AddIngredients
+            // btn_Next
             // 
-            this.btn_AddIngredients.Location = new System.Drawing.Point(308, 354);
-            this.btn_AddIngredients.Name = "btn_AddIngredients";
-            this.btn_AddIngredients.Size = new System.Drawing.Size(154, 37);
-            this.btn_AddIngredients.TabIndex = 8;
-            this.btn_AddIngredients.Text = "Add Ingredients";
-            this.btn_AddIngredients.UseVisualStyleBackColor = true;
-            this.btn_AddIngredients.Click += new System.EventHandler(this.btn_AddIngredients_Click);
+            this.btn_Next.Location = new System.Drawing.Point(308, 354);
+            this.btn_Next.Name = "btn_Next";
+            this.btn_Next.Size = new System.Drawing.Size(154, 37);
+            this.btn_Next.TabIndex = 8;
+            this.btn_Next.Text = "Next";
+            this.btn_Next.UseVisualStyleBackColor = true;
+            this.btn_Next.Click += new System.EventHandler(this.btn_Next_Click);
             // 
             // AddRecipeForm
             // 
@@ -138,7 +142,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(671, 450);
-            this.Controls.Add(this.btn_AddIngredients);
+            this.Controls.Add(this.btn_Next);
             this.Controls.Add(this.btn_Cancel);
             this.Controls.Add(this.txt_Description);
             this.Controls.Add(this.cmb_Category);
@@ -164,7 +168,7 @@
         private System.Windows.Forms.ComboBox cmb_Category;
         private System.Windows.Forms.TextBox txt_Description;
         private System.Windows.Forms.Button btn_Cancel;
-        private System.Windows.Forms.Button btn_AddIngredients;
+        private System.Windows.Forms.Button btn_Next;
     }
 }
 
