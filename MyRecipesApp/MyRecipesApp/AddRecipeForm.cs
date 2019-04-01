@@ -23,59 +23,60 @@ namespace MyRecipesApp
         public AddRecipeForm()
         {
             InitializeComponent();
-              
-            // Add recipeTable to recipeData dataset
-            recipeTable = recipeData.Tables.Add("recipeTable");
-            // Fill recipeTable with recipes from SQL database
-            recipeTable = fillDataTable(recipeTable);
+          
         }
 
         private void btn_Next_Click(object sender, EventArgs e)
         {
-            
-            //string recipeID="";
-            AddRow();
 
-            PopulateDatabase();
+            updateTable();
             
                
-            AddIngredientsForm addIngredientsForm = new AddIngredientsForm(recipeID, txt_RecipeName.Text);
+            AddIngredientsForm addIngredientsForm = new AddIngredientsForm(recipeID, txt_RecipeName.Text, recipeData);
+            addIngredientsForm.RecipeDataSet = this.recipeData;
             this.Hide();
             addIngredientsForm.ShowDialog();
             this.Close();
         }
 
-        private void btn_Cancel_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        
 
 
-        public DataTable fillDataTable(DataTable table)
+        private void updateTable()
         {
-            
+            recipeTable = recipeData.Tables.Add("recipeTable");
+            CreateTable();
+
             using (SqlConnection sqlConn = new SqlConnection(connectionString))
             {
                 sqlConn.Open();
-                string query = "SELECT * FROM [" + table + "] ORDER BY recipeID DESC";
+                var sqlQuery = "select * from RecipeTable";
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, sqlConn);
                 
-
-                SqlCommand cmd = new SqlCommand(query, sqlConn);
-
+                dataAdapter.Fill(recipeTable);
+                DataRow row = recipeData.Tables["recipeTable"].NewRow();
                 
-                using (SqlDataAdapter a = new SqlDataAdapter(cmd))
-                {
-                    a.Fill(recipeTable);
-                    sqlConn.Close();
-                    return recipeTable;
-                }
+                row["recipeID"] = GetRecipeID();
+                row["recipeName"] = txt_RecipeName.Text;
+                row["recipeCategory"] = cmb_Category.Text;
+                row["recipeDescription"] = txt_Description.Text;
+                recipeData.Tables["recipeTable"].Rows.Add(row);
+
+                new SqlCommandBuilder(dataAdapter);
+                dataAdapter.Update(recipeTable);
+                sqlConn.Close();
             }
 
          
         }
 
-        public void clearDatabase()
+        public void CreateTable()
         {
+
+              recipeTable.Columns.Add("recipeID", Type.GetType("System.Int32"));
+              recipeTable.Columns.Add("recipeName", Type.GetType("System.String"));
+              recipeTable.Columns.Add("recipeCategory", Type.GetType("System.String"));
+              recipeTable.Columns.Add("recipeDescription", Type.GetType("System.String"));
 
         }
 
@@ -91,17 +92,7 @@ namespace MyRecipesApp
             }
         }
         
-        public void AddRow()
-        {
-            DataRow row = recipeData.Tables["recipeTable"].NewRow();
-
-            row["recipeID"] = GetRecipeID()+1;
-            row["recipeName"] = txt_RecipeName.Text;
-            row["recipeCategory"] = cmb_Category.Text;
-            row["recipeDescription"] = txt_Description.Text;
-            recipeTable.Rows.Add(row);
-
-        }
+       
 
         public int GetRecipeID()
         {
@@ -109,7 +100,8 @@ namespace MyRecipesApp
             {
                 if (recipeTable.Rows.Count > 0)
                 {
-                    recipeID = Convert.ToInt32(recipeTable.Rows[0]["recipeID"]);
+                    recipeID = Convert.ToInt32(recipeTable.Rows[recipeTable.Rows.Count-1]["recipeID"]);
+                    recipeID++;
 
                 }
 
@@ -119,14 +111,14 @@ namespace MyRecipesApp
                 }
 
             }
-          
-                   
-            
-            
+
             return recipeID;
         }
 
-
+        private void btn_Cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
 
     }
