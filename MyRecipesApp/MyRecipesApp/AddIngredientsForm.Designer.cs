@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lbl_RecipeName = new System.Windows.Forms.Label();
@@ -35,19 +36,21 @@
             this.lbl_RecipeID = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.dgv_Ingredients = new System.Windows.Forms.DataGridView();
+            this.myRecipeAppDBDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label7 = new System.Windows.Forms.Label();
             this.btn_Back = new System.Windows.Forms.Button();
             this.btn_Cancel = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btn_AddDirections = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txt_IngredientName = new System.Windows.Forms.TextBox();
             this.cmb_Amount1 = new System.Windows.Forms.ComboBox();
             this.cmb_Amount2 = new System.Windows.Forms.ComboBox();
             this.cmb_Units = new System.Windows.Forms.ComboBox();
             this.btn_AddIngredient = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txt_IngredientName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Ingredients)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.myRecipeAppDBDataSetBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -148,16 +151,18 @@
             this.btn_Cancel.TabIndex = 16;
             this.btn_Cancel.Text = "Cancel";
             this.btn_Cancel.UseVisualStyleBackColor = true;
+            this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
             // 
-            // button3
+            // btn_AddDirections
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(436, 398);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(150, 33);
-            this.button3.TabIndex = 17;
-            this.button3.Text = "Add Directions";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btn_AddDirections.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_AddDirections.Location = new System.Drawing.Point(436, 398);
+            this.btn_AddDirections.Name = "btn_AddDirections";
+            this.btn_AddDirections.Size = new System.Drawing.Size(150, 33);
+            this.btn_AddDirections.TabIndex = 17;
+            this.btn_AddDirections.Text = "Add Directions";
+            this.btn_AddDirections.UseVisualStyleBackColor = true;
+            this.btn_AddDirections.Click += new System.EventHandler(this.btn_AddDirections_Click);
             // 
             // label5
             // 
@@ -179,13 +184,6 @@
             this.label6.TabIndex = 7;
             this.label6.Text = "Units";
             // 
-            // txt_IngredientName
-            // 
-            this.txt_IngredientName.Location = new System.Drawing.Point(183, 70);
-            this.txt_IngredientName.Name = "txt_IngredientName";
-            this.txt_IngredientName.Size = new System.Drawing.Size(197, 20);
-            this.txt_IngredientName.TabIndex = 8;
-            // 
             // cmb_Amount1
             // 
             this.cmb_Amount1.FormattingEnabled = true;
@@ -202,6 +200,7 @@
             this.cmb_Amount1.Name = "cmb_Amount1";
             this.cmb_Amount1.Size = new System.Drawing.Size(76, 21);
             this.cmb_Amount1.TabIndex = 9;
+            this.cmb_Amount1.Text = "1";
             // 
             // cmb_Amount2
             // 
@@ -217,6 +216,7 @@
             this.cmb_Amount2.Name = "cmb_Amount2";
             this.cmb_Amount2.Size = new System.Drawing.Size(87, 21);
             this.cmb_Amount2.TabIndex = 10;
+            this.cmb_Amount2.Text = "1/3";
             // 
             // cmb_Units
             // 
@@ -234,6 +234,7 @@
             this.cmb_Units.Name = "cmb_Units";
             this.cmb_Units.Size = new System.Drawing.Size(115, 21);
             this.cmb_Units.TabIndex = 11;
+            this.cmb_Units.Text = "Cups";
             // 
             // btn_AddIngredient
             // 
@@ -244,14 +245,15 @@
             this.btn_AddIngredient.TabIndex = 12;
             this.btn_AddIngredient.Text = "Add";
             this.btn_AddIngredient.UseVisualStyleBackColor = true;
+            this.btn_AddIngredient.Click += new System.EventHandler(this.btn_AddIngredient_Click);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txt_IngredientName);
             this.groupBox1.Controls.Add(this.btn_AddIngredient);
             this.groupBox1.Controls.Add(this.cmb_Units);
             this.groupBox1.Controls.Add(this.cmb_Amount2);
             this.groupBox1.Controls.Add(this.cmb_Amount1);
-            this.groupBox1.Controls.Add(this.txt_IngredientName);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label5);
@@ -262,13 +264,21 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add Ingredient";
             // 
+            // txt_IngredientName
+            // 
+            this.txt_IngredientName.Location = new System.Drawing.Point(183, 75);
+            this.txt_IngredientName.Name = "txt_IngredientName";
+            this.txt_IngredientName.Size = new System.Drawing.Size(196, 20);
+            this.txt_IngredientName.TabIndex = 13;
+            this.txt_IngredientName.Text = "Chocolate";
+            // 
             // AddIngredientsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btn_AddDirections);
             this.Controls.Add(this.btn_Cancel);
             this.Controls.Add(this.btn_Back);
             this.Controls.Add(this.label7);
@@ -281,6 +291,7 @@
             this.Name = "AddIngredientsForm";
             this.Text = "AddIngredients";
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Ingredients)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.myRecipeAppDBDataSetBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -300,14 +311,16 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btn_Back;
         private System.Windows.Forms.Button btn_Cancel;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btn_AddDirections;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txt_IngredientName;
         private System.Windows.Forms.ComboBox cmb_Amount1;
         private System.Windows.Forms.ComboBox cmb_Amount2;
         private System.Windows.Forms.ComboBox cmb_Units;
         private System.Windows.Forms.Button btn_AddIngredient;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txt_IngredientName;
+        private System.Windows.Forms.BindingSource myRecipeAppDBDataSetBindingSource;
+        
     }
 }
