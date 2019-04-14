@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txt_Directions = new System.Windows.Forms.TextBox();
             this.btn_AddDirection = new System.Windows.Forms.Button();
             this.btn_Review = new System.Windows.Forms.Button();
             this.btn_Cancel = new System.Windows.Forms.Button();
             this.btn_Back = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgv_Directions = new System.Windows.Forms.DataGridView();
             this.lbl_RecipeID = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lbl_RecipeName = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txt_Directions = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -55,7 +55,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Directions)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -70,6 +70,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add Direction";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(25, 37);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(324, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Enter one step at a time and click \"Add Step\" to add the instruction";
+            // 
+            // txt_Directions
+            // 
+            this.txt_Directions.Location = new System.Drawing.Point(28, 61);
+            this.txt_Directions.Multiline = true;
+            this.txt_Directions.Name = "txt_Directions";
+            this.txt_Directions.Size = new System.Drawing.Size(348, 88);
+            this.txt_Directions.TabIndex = 13;
+            this.txt_Directions.Text = "Pour in bowl";
+            // 
             // btn_AddDirection
             // 
             this.btn_AddDirection.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -79,6 +97,7 @@
             this.btn_AddDirection.TabIndex = 12;
             this.btn_AddDirection.Text = "Add Direction";
             this.btn_AddDirection.UseVisualStyleBackColor = true;
+            this.btn_AddDirection.Click += new System.EventHandler(this.btn_AddDirection_Click);
             // 
             // btn_Review
             // 
@@ -89,6 +108,7 @@
             this.btn_Review.TabIndex = 28;
             this.btn_Review.Text = "Review";
             this.btn_Review.UseVisualStyleBackColor = true;
+            this.btn_Review.Click += new System.EventHandler(this.btn_Review_Click);
             // 
             // btn_Cancel
             // 
@@ -99,6 +119,7 @@
             this.btn_Cancel.TabIndex = 27;
             this.btn_Cancel.Text = "Cancel";
             this.btn_Cancel.UseVisualStyleBackColor = true;
+            this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
             // 
             // btn_Back
             // 
@@ -120,13 +141,13 @@
             this.label7.TabIndex = 25;
             this.label7.Text = "List of Directions for:";
             // 
-            // dataGridView1
+            // dgv_Directions
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(433, 146);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(339, 215);
-            this.dataGridView1.TabIndex = 24;
+            this.dgv_Directions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Directions.Location = new System.Drawing.Point(433, 146);
+            this.dgv_Directions.Name = "dgv_Directions";
+            this.dgv_Directions.Size = new System.Drawing.Size(339, 215);
+            this.dgv_Directions.TabIndex = 24;
             // 
             // lbl_RecipeID
             // 
@@ -177,23 +198,6 @@
             this.label1.Size = new System.Drawing.Size(191, 31);
             this.label1.TabIndex = 19;
             this.label1.Text = "Add Directions";
-            // 
-            // txt_Directions
-            // 
-            this.txt_Directions.Location = new System.Drawing.Point(28, 61);
-            this.txt_Directions.Multiline = true;
-            this.txt_Directions.Name = "txt_Directions";
-            this.txt_Directions.Size = new System.Drawing.Size(348, 88);
-            this.txt_Directions.TabIndex = 13;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 37);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(324, 13);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Enter one step at a time and click \"Add Step\" to add the instruction";
             // 
             // label5
             // 
@@ -258,14 +262,30 @@
             this.cmb_PrepHours.Name = "cmb_PrepHours";
             this.cmb_PrepHours.Size = new System.Drawing.Size(38, 21);
             this.cmb_PrepHours.TabIndex = 33;
+            this.cmb_PrepHours.Text = "1";
             // 
             // cmb_OvenTemp
             // 
             this.cmb_OvenTemp.FormattingEnabled = true;
+            this.cmb_OvenTemp.Items.AddRange(new object[] {
+            "200",
+            "225",
+            "250",
+            "275",
+            "300",
+            "325",
+            "350",
+            "375",
+            "400",
+            "425",
+            "450",
+            "475",
+            "500"});
             this.cmb_OvenTemp.Location = new System.Drawing.Point(200, 128);
             this.cmb_OvenTemp.Name = "cmb_OvenTemp";
             this.cmb_OvenTemp.Size = new System.Drawing.Size(79, 21);
             this.cmb_OvenTemp.TabIndex = 33;
+            this.cmb_OvenTemp.Text = "375";
             // 
             // label9
             // 
@@ -343,6 +363,7 @@
             this.cmb_PrepMinutes.Name = "cmb_PrepMinutes";
             this.cmb_PrepMinutes.Size = new System.Drawing.Size(38, 21);
             this.cmb_PrepMinutes.TabIndex = 33;
+            this.cmb_PrepMinutes.Text = "5";
             // 
             // label10
             // 
@@ -386,6 +407,7 @@
             this.cmb_CookHours.Name = "cmb_CookHours";
             this.cmb_CookHours.Size = new System.Drawing.Size(38, 21);
             this.cmb_CookHours.TabIndex = 33;
+            this.cmb_CookHours.Text = "2";
             // 
             // cmb_CookMinutes
             // 
@@ -454,6 +476,7 @@
             this.cmb_CookMinutes.Name = "cmb_CookMinutes";
             this.cmb_CookMinutes.Size = new System.Drawing.Size(38, 21);
             this.cmb_CookMinutes.TabIndex = 33;
+            this.cmb_CookMinutes.Text = "10";
             // 
             // label11
             // 
@@ -495,7 +518,7 @@
             this.Controls.Add(this.btn_Cancel);
             this.Controls.Add(this.btn_Back);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgv_Directions);
             this.Controls.Add(this.lbl_RecipeID);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.lbl_RecipeName);
@@ -505,7 +528,7 @@
             this.Text = "AddDirectionsForm";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Directions)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -519,7 +542,7 @@
         private System.Windows.Forms.Button btn_Cancel;
         private System.Windows.Forms.Button btn_Back;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgv_Directions;
         private System.Windows.Forms.Label lbl_RecipeID;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lbl_RecipeName;

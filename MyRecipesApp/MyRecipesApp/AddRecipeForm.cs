@@ -17,21 +17,21 @@ namespace MyRecipesApp
         DataSet recipeData = new DataSet("RecipeData");
         DataTable recipeTable = new DataTable("recipeTable");
         int recipeID;
-        
-        
+
+
 
         public AddRecipeForm()
         {
             InitializeComponent();
-          
+
         }
 
         private void btn_Next_Click(object sender, EventArgs e)
         {
 
             updateTable();
-            
-               
+
+
             AddIngredientsForm addIngredientsForm = new AddIngredientsForm(recipeID, txt_RecipeName.Text, recipeData);
             addIngredientsForm.RecipeDataSet = this.recipeData;
             this.Hide();
@@ -39,7 +39,7 @@ namespace MyRecipesApp
             this.Close();
         }
 
-        
+
 
 
         private void updateTable()
@@ -52,10 +52,10 @@ namespace MyRecipesApp
                 sqlConn.Open();
                 var sqlQuery = "select * from RecipeTable";
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, sqlConn);
-                
+
                 dataAdapter.Fill(recipeTable);
                 DataRow row = recipeData.Tables["recipeTable"].NewRow();
-                
+
                 row["recipeID"] = GetRecipeID();
                 row["recipeName"] = txt_RecipeName.Text;
                 row["recipeCategory"] = cmb_Category.Text;
@@ -67,22 +67,22 @@ namespace MyRecipesApp
                 sqlConn.Close();
             }
 
-         
+
         }
 
         public void CreateTable()
         {
 
-              recipeTable.Columns.Add("recipeID", Type.GetType("System.Int32"));
-              recipeTable.Columns.Add("recipeName", Type.GetType("System.String"));
-              recipeTable.Columns.Add("recipeCategory", Type.GetType("System.String"));
-              recipeTable.Columns.Add("recipeDescription", Type.GetType("System.String"));
+            recipeTable.Columns.Add("recipeID", Type.GetType("System.Int32"));
+            recipeTable.Columns.Add("recipeName", Type.GetType("System.String"));
+            recipeTable.Columns.Add("recipeCategory", Type.GetType("System.String"));
+            recipeTable.Columns.Add("recipeDescription", Type.GetType("System.String"));
 
         }
 
         public void PopulateDatabase()
         {
-            
+
             SqlDataAdapter adapter = new SqlDataAdapter();
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
             using (var sqlBulk = new SqlBulkCopy(connectionString))
@@ -91,8 +91,8 @@ namespace MyRecipesApp
                 sqlBulk.WriteToServer(recipeTable);
             }
         }
-        
-       
+
+
 
         public int GetRecipeID()
         {
@@ -100,7 +100,7 @@ namespace MyRecipesApp
             {
                 if (recipeTable.Rows.Count > 0)
                 {
-                    recipeID = Convert.ToInt32(recipeTable.Rows[recipeTable.Rows.Count-1]["recipeID"]);
+                    recipeID = Convert.ToInt32(recipeTable.Rows[recipeTable.Rows.Count - 1]["recipeID"]);
                     recipeID++;
 
                 }

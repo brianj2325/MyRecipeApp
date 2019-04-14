@@ -16,25 +16,28 @@ namespace MyRecipesApp
     public partial class AddIngredientsForm : Form
     {
         string connectionString = @"Data Source = OfficeComputer\SQLEXPRESS; Initial Catalog = MyRecipeAppDB; Integrated Security=True;";
-        DataTable recipeIngredientTable = new DataTable("ingredientsForRecipe");
+        DataTable recipeIngredientTable = new DataTable("recipeIngredientTable");
         DataTable ingredientTable = new DataTable("ingredientTable");
         public DataSet RecipeDataSet;
         int ingredientID;
+        int recipeID;
+        private string recipeName;
+
 
         public AddIngredientsForm(int recipeID, string recipeName, DataSet dataSet)
         {
             InitializeComponent();
+
             RecipeDataSet = dataSet;
+            this.recipeID = recipeID;
+            this.recipeName = recipeName;
+           
+
             CreateTable();
 
-
-
-
-
             lbl_RecipeID.Text = recipeID.ToString();
+           
             lbl_RecipeName.Text = recipeName;
-
-
         }
 
         private void btn_AddIngredient_Click(object sender, EventArgs e)
@@ -56,7 +59,7 @@ namespace MyRecipesApp
             cmb_Units.Text = "Cups";
 
         }
-        public void AddRow()
+        private void AddRow()
         {
 
             double totalAmount = Convert.ToDouble(cmb_Amount1.Text) + FractionToDouble(cmb_Amount2.Text);
@@ -74,7 +77,7 @@ namespace MyRecipesApp
 
         }
 
-        public void CreateTable()
+        private void CreateTable()
         {
             ingredientTable = RecipeDataSet.Tables.Add("ingredientTable");
 
@@ -88,8 +91,6 @@ namespace MyRecipesApp
 
         private void updateTable()
         {
-
-
 
             using (SqlConnection sqlConn = new SqlConnection(connectionString))
             {
@@ -113,11 +114,11 @@ namespace MyRecipesApp
                 sqlConn.Close();
             }
 
-
         }
+
+
         public int GetIngredientID()
         {
-
 
             if (ingredientTable != null)
             {
@@ -155,9 +156,6 @@ namespace MyRecipesApp
             }
 
 
-
-
-            
                 dgv_Ingredients.DataSource = recipeIngredientTable;
                 dgv_Ingredients.Columns["recipeID"].Visible = false;
                 dgv_Ingredients.Columns["ingredientID"].Visible = false;
@@ -208,7 +206,10 @@ namespace MyRecipesApp
 
             private void btn_AddDirections_Click(object sender, EventArgs e)
             {
-                updateTable();
+            AddDirectionsForm addDirectionsForm = new AddDirectionsForm(recipeID, recipeName, RecipeDataSet);
+            this.Hide();
+            addDirectionsForm.ShowDialog();
+            this.Close();
             }
         
     }
