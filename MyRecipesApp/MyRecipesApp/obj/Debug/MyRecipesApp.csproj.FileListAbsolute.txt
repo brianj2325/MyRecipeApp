@@ -9,5 +9,7 @@ C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.exe
 C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.pdb
 C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.AddDirectionsForm.resources
 C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.AddIngredientsForm.resources
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.Form3.resources
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.BrowseRecipes.resources
+C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.ViewRecipeForm.resources
 C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.csprojAssemblyReference.cache
-C:\Users\brian\source\repos\MyRecipesApp\MyRecipesApp\obj\Debug\MyRecipesApp.RecipeReview.resources

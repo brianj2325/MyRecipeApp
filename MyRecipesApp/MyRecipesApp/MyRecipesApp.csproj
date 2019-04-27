@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -79,13 +79,29 @@
     <Compile Include="AddRecipeForm.Designer.cs">
       <DependentUpon>AddRecipeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RecipeReview.cs">
+    <Compile Include="BrowseRecipes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RecipeReview.Designer.cs">
-      <DependentUpon>RecipeReview.cs</DependentUpon>
+    <Compile Include="BrowseRecipes.Designer.cs">
+      <DependentUpon>BrowseRecipes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Directions.cs" />
+    <Compile Include="HomeMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HomeMenu.designer.cs">
+      <DependentUpon>HomeMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ingredient.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recipe.cs" />
+    <Compile Include="ViewRecipe.cs" />
+    <Compile Include="ViewRecipeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewRecipeForm.Designer.cs">
+      <DependentUpon>ViewRecipeForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AddDirectionsForm.resx">
       <DependentUpon>AddDirectionsForm.cs</DependentUpon>
@@ -96,6 +112,12 @@
     <EmbeddedResource Include="AddRecipeForm.resx">
       <DependentUpon>AddRecipeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BrowseRecipes.resx">
+      <DependentUpon>BrowseRecipes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HomeMenu.resx">
+      <DependentUpon>HomeMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -105,8 +127,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="RecipeReview.resx">
-      <DependentUpon>RecipeReview.cs</DependentUpon>
+    <EmbeddedResource Include="ViewRecipeForm.resx">
+      <DependentUpon>ViewRecipeForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

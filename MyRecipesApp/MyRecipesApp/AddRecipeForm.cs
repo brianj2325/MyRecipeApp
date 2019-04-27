@@ -13,10 +13,11 @@ namespace MyRecipesApp
 {
     public partial class AddRecipeForm : Form
     {
-        string connectionString = @"Data Source = OfficeComputer\SQLEXPRESS; Initial Catalog = MyRecipeAppDB; Integrated Security=True;";
+        string connectionString = @"Data Source=OfficeComputer\SQLEXPRESS;Initial Catalog=MyRecipeAppDB;Integrated Security=True;";
         DataSet recipeData = new DataSet("RecipeData");
         DataTable recipeTable = new DataTable("recipeTable");
         int recipeID;
+        Recipe recipe;
 
 
 
@@ -28,18 +29,28 @@ namespace MyRecipesApp
 
         private void btn_Next_Click(object sender, EventArgs e)
         {
-
+            
             updateTable();
+            recipe = CreateRecipe();
 
-
-            AddIngredientsForm addIngredientsForm = new AddIngredientsForm(recipeID, txt_RecipeName.Text, recipeData);
+            AddIngredientsForm addIngredientsForm = new AddIngredientsForm(recipe, recipeData);
             addIngredientsForm.RecipeDataSet = this.recipeData;
             this.Hide();
             addIngredientsForm.ShowDialog();
             this.Close();
         }
 
+        private Recipe CreateRecipe()
+        {
+            Recipe Recipe = new Recipe();
+            Recipe.recipeID = GetRecipeID();
+            Recipe.recipeName = txt_RecipeName.Text;
+            Recipe.category = cmb_Category.Text;
+            Recipe.description = txt_Description.Text;
 
+            return Recipe;
+
+        }
 
 
         private void updateTable()
@@ -117,6 +128,9 @@ namespace MyRecipesApp
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
+            Form3 form3 = new Form3();
+            this.Hide();
+            form3.ShowDialog();
             this.Close();
         }
 

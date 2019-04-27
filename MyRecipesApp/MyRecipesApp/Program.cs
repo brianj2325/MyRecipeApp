@@ -16,7 +16,7 @@ namespace MyRecipesApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AddRecipeForm());
+            Application.Run(new Form3());
         }
     }
 }

@@ -15,42 +15,59 @@ namespace MyRecipesApp
 {
     public partial class AddIngredientsForm : Form
     {
-        string connectionString = @"Data Source = OfficeComputer\SQLEXPRESS; Initial Catalog = MyRecipeAppDB; Integrated Security=True;";
+        string connectionString = @"Data Source=OfficeComputer\SQLEXPRESS;Initial Catalog=MyRecipeAppDB;Integrated Security=True;";
         DataTable recipeIngredientTable = new DataTable("recipeIngredientTable");
         DataTable ingredientTable = new DataTable("ingredientTable");
         public DataSet RecipeDataSet;
         int ingredientID;
-        int recipeID;
-        private string recipeName;
+        
+        Recipe recipe;
+        List<Ingredient> ingredients = new List<Ingredient>();
 
 
-        public AddIngredientsForm(int recipeID, string recipeName, DataSet dataSet)
+        public AddIngredientsForm(Recipe recipe, DataSet dataSet)
         {
             InitializeComponent();
 
             RecipeDataSet = dataSet;
-            this.recipeID = recipeID;
-            this.recipeName = recipeName;
+            this.recipe = recipe;
+            
            
 
             CreateTable();
+            CreateDisplayTable();
 
-            lbl_RecipeID.Text = recipeID.ToString();
-           
-            lbl_RecipeName.Text = recipeName;
+            lbl_RecipeID.Text = recipe.recipeID.ToString();
+
+            lbl_RecipeName.Text = recipe.recipeName;
         }
 
         private void btn_AddIngredient_Click(object sender, EventArgs e)
         {
+            Ingredient ingredient = new Ingredient();
 
-            updateTable();
+            
+            ingredient.ingredientName = txt_IngredientName.Text;
+           
+            if (cmb_Amount2.Text == "0")
+            {
+                ingredient.amount = cmb_Amount1.Text;
+            }
+            else
+            {
+                ingredient.amount = cmb_Amount1.Text + " - " + cmb_Amount2.Text;
+            }
+            
+            ingredient.units = cmb_Units.Text;
+            ingredients.Add(ingredient);
+            updateTable(ingredient);
 
             clearIngredient();
             DisplayIngredients();
 
 
         }
-
+        
         private void clearIngredient()
         {
             txt_IngredientName.Text = "";
@@ -59,23 +76,23 @@ namespace MyRecipesApp
             cmb_Units.Text = "Cups";
 
         }
-        private void AddRow()
-        {
+        //private void AddRow()
+        //{
 
-            double totalAmount = Convert.ToDouble(cmb_Amount1.Text) + FractionToDouble(cmb_Amount2.Text);
+        //    double totalAmount = Convert.ToDouble(cmb_Amount1.Text) + FractionToDouble(cmb_Amount2.Text);
 
-            DataRow row = RecipeDataSet.Tables["ingredientTable"].NewRow();
-            row["ingredientID"] = GetIngredientID();
-            row["ingredientName"] = txt_IngredientName.Text;
-            row["ingredientAmount"] = totalAmount;
-            row["ingredientUnits"] = cmb_Units.Text;
-            row["recipeID"] = lbl_RecipeID.Text;
+        //    DataRow row = RecipeDataSet.Tables["ingredientTable"].NewRow();
+        //    row["ingredientID"] = GetIngredientID();
+        //    row["ingredientName"] = txt_IngredientName.Text;
+        //    row["ingredientAmount"] = totalAmount;
+        //    row["ingredientUnits"] = cmb_Units.Text;
+        //    row["recipeID"] = lbl_RecipeID.Text;
 
-            ingredientTable.Rows.Add(row);
+        //    ingredientTable.Rows.Add(row);
 
-            updateTable();
+        //    updateTable();
 
-        }
+        //}
 
         private void CreateTable()
         {
@@ -84,16 +101,17 @@ namespace MyRecipesApp
             ingredientTable.Columns.Add("ingredientID", Type.GetType("System.Int32"));
             ingredientTable.Columns.Add("recipeID", Type.GetType("System.Int32"));
             ingredientTable.Columns.Add("ingredientName", Type.GetType("System.String"));
-            ingredientTable.Columns.Add("ingredientAmount", Type.GetType("System.Double"));
+            ingredientTable.Columns.Add("ingredientAmount", Type.GetType("System.String"));
             ingredientTable.Columns.Add("ingredientUnits", Type.GetType("System.String"));
 
         }
 
-        private void updateTable()
+        private void updateTable(Ingredient ingredient)
         {
 
             using (SqlConnection sqlConn = new SqlConnection(connectionString))
             {
+                
                 sqlConn.Open();
                 var sqlQuery = "select * from IngredientTable";
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, sqlConn);
@@ -102,11 +120,12 @@ namespace MyRecipesApp
                 DataRow row = RecipeDataSet.Tables["ingredientTable"].NewRow();
                 ingredientID = GetIngredientID();
 
+                
                 row["ingredientID"] = ingredientID;
-                row["recipeID"] = lbl_RecipeID.Text;
-                row["ingredientName"] = txt_IngredientName.Text;
-                row["ingredientAmount"] = Convert.ToDouble(cmb_Amount1.Text) + FractionToDouble(cmb_Amount2.Text);
-                row["ingredientUnits"] = cmb_Units.Text;
+                row["recipeID"] = recipe.recipeID;
+                row["ingredientName"] = ingredient.ingredientName;
+                row["ingredientAmount"] = ingredient.amount;
+                row["ingredientUnits"] = ingredient.units;
                 RecipeDataSet.Tables["ingredientTable"].Rows.Add(row);
 
                 new SqlCommandBuilder(dataAdapter);
@@ -140,6 +159,14 @@ namespace MyRecipesApp
             return ingredientID;
         }
 
+        public void CreateDisplayTable()
+        {
+            recipeIngredientTable.Columns.Add("ingredientID", Type.GetType("System.Int32"));
+            recipeIngredientTable.Columns.Add("recipeID", Type.GetType("System.Int32"));
+            recipeIngredientTable.Columns.Add("ingredientName", Type.GetType("System.String"));
+            recipeIngredientTable.Columns.Add("ingredientAmount", Type.GetType("System.String"));
+            recipeIngredientTable.Columns.Add("ingredientUnits", Type.GetType("System.String"));
+        }
         private void DisplayIngredients()
         {
             if (recipeIngredientTable != null)
@@ -149,7 +176,7 @@ namespace MyRecipesApp
             using (SqlConnection sqlConn = new SqlConnection(connectionString))
             {
                 sqlConn.Open();
-                var sqlQuery = "select * from IngredientTable WHERE recipeID=" + lbl_RecipeID.Text;
+                var sqlQuery = "select * from IngredientTable WHERE recipeID=" + recipe.recipeID;
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, sqlConn);
 
                 dataAdapter.Fill(recipeIngredientTable);
@@ -159,6 +186,7 @@ namespace MyRecipesApp
                 dgv_Ingredients.DataSource = recipeIngredientTable;
                 dgv_Ingredients.Columns["recipeID"].Visible = false;
                 dgv_Ingredients.Columns["ingredientID"].Visible = false;
+                
             
         }
 
@@ -206,11 +234,19 @@ namespace MyRecipesApp
 
             private void btn_AddDirections_Click(object sender, EventArgs e)
             {
-            AddDirectionsForm addDirectionsForm = new AddDirectionsForm(recipeID, recipeName, RecipeDataSet);
+            recipe.ingredients = ingredients;
+            AddDirectionsForm addDirectionsForm = new AddDirectionsForm(recipe, RecipeDataSet);
             this.Hide();
             addDirectionsForm.ShowDialog();
             this.Close();
             }
-        
+
+        private void btn_Back_Click(object sender, EventArgs e)
+        {
+            //AddRecipeForm addRecipe;
+            //this.Hide();
+            //addRecipe.ShowDialog();
+            //this.Close();
+        }
     }
 }

@@ -13,30 +13,33 @@ namespace MyRecipesApp
 {
     public partial class AddDirectionsForm : Form
     {
-        
+        Recipe recipe;
+        List<Directions> directions = new List<Directions>();
+
         DataSet RecipeDataSet;
         DataTable directionsTable = new DataTable("directionsTable");
         DataTable cookInfoTable = new DataTable("directionInfoTable");
         DataTable directionsForRecipeTable = new DataTable("directionsForRecipeTable");
-        string connectionString = @"Data Source = OfficeComputer\SQLEXPRESS; Initial Catalog = MyRecipeAppDB; Integrated Security=True;";
-        int recipeID, directionID;
-        string recipeName;
 
-        public AddDirectionsForm(int recipeID, string recipeName, DataSet dataSet)
+        string connectionString = @"Data Source=OfficeComputer\SQLEXPRESS;Initial Catalog=MyRecipeAppDB;Integrated Security=True";
+        int directionID;
+        
+
+        public AddDirectionsForm(Recipe recipe, DataSet dataSet)
         {
             InitializeComponent();
            
             
             RecipeDataSet = dataSet;
-            this.recipeID = recipeID;
-            this.recipeName = recipeName;
+            this.recipe = recipe;
+            
            
 
             CreateDirectionsTable();
             CreateCookInfoTable();
 
-            lbl_RecipeID.Text = recipeID.ToString();
-            lbl_RecipeName.Text = recipeName;
+            lbl_RecipeID.Text = recipe.recipeID.ToString();
+            lbl_RecipeName.Text = recipe.recipeName;
 
         }
 
@@ -49,7 +52,7 @@ namespace MyRecipesApp
             using (SqlConnection sqlConn = new SqlConnection(connectionString))
             {
                 sqlConn.Open();
-                var sqlQuery = "select * from DirectionTable WHERE recipeID=" + lbl_RecipeID.Text;
+                var sqlQuery = "select * from DirectionTable WHERE recipeID=" +recipe.recipeID;
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, sqlConn);
 
                 dataAdapter.Fill(directionsForRecipeTable);
@@ -64,7 +67,15 @@ namespace MyRecipesApp
 
         private void btn_AddDirection_Click(object sender, EventArgs e)
         {
+            Directions direction = new Directions();
+            
+
             updateDirectionTable();
+
+            direction.directionNumber = GetDirectionNumber();
+            direction.direction = txt_Directions.Text;
+            directions.Add(direction);
+
             DisplayDirections();
             txt_Directions.Text = "";
             
@@ -73,9 +84,20 @@ namespace MyRecipesApp
         private void btn_Review_Click(object sender, EventArgs e)
         {
             updateCookInfoTable();
-            RecipeReview reviewRecipe = new RecipeReview(recipeID,RecipeDataSet);
+            recipe.ovenTemp = Convert.ToInt32(cmb_OvenTemp.Text);
+            recipe.prepTimeHours = Convert.ToInt32(cmb_PrepHours.Text);
+            recipe.prepTimeMinutes = Convert.ToInt32(cmb_PrepMinutes.Text);
+            recipe.cookTimeHours = Convert.ToInt32(cmb_CookHours.Text);
+            recipe.cookTimeMinutes = Convert.ToInt32(cmb_CookMinutes.Text);
+            recipe.directions = directions;
+
+            ViewRecipe view = new ViewRecipe();
+            ViewRecipeForm viewRecipeForm = new ViewRecipeForm(recipe);
+            //MessageBox.Show(view.PrintRecipe(recipe));
+
+            //RecipeReview reviewRecipe = new RecipeReview(recipeID,RecipeDataSet);
             this.Hide();
-            reviewRecipe.ShowDialog();
+            viewRecipeForm.ShowDialog();
             this.Close();
 
         }
@@ -124,7 +146,7 @@ namespace MyRecipesApp
                 directionID = GetTableID(directionsTable,"directionID");
 
                 row["directionID"] = directionID;
-                row["recipeID"] = lbl_RecipeID.Text;
+                row["recipeID"] = recipe.recipeID;
                 row["directionNumber"] = GetDirectionNumber();
                 row["direction"] = txt_Directions.Text;
                 

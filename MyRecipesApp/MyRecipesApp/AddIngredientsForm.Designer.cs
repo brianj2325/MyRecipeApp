@@ -141,6 +141,7 @@
             this.btn_Back.TabIndex = 15;
             this.btn_Back.Text = "Back";
             this.btn_Back.UseVisualStyleBackColor = true;
+            this.btn_Back.Click += new System.EventHandler(this.btn_Back_Click);
             // 
             // btn_Cancel
             // 
