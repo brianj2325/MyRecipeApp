@@ -21,6 +21,7 @@ namespace MyRecipesApp
         List<Ingredient> ingredients = new List<Ingredient>();
         List<Directions> directions = new List<Directions>();
         Recipe recipe = new Recipe();
+        DataSet dataSet = new DataSet();
 
 
         //Create list for testing
@@ -66,47 +67,45 @@ namespace MyRecipesApp
         //}
 
 
-        public ViewRecipeForm(Recipe recipe)
+        public ViewRecipeForm(Recipe recipe, DataSet dataSet)
         {
             InitializeComponent();
             this.recipe = recipe;
+            this.dataSet = dataSet;
 
-        //    recipe.recipeID = 1;
-        //        recipe.recipeName = "Sugar Cookies";
-        //    recipe.category = "Dinner";
-        //    recipe.description = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890" +
-        //"12345678901234567890123456789012345678901234567890123456789012345678901234567890";
-        //        recipe.ovenTemp = 365;
-        //    recipe.prepTimeHours = 1;
-        //    recipe.prepTimeMinutes = 20;
-        //    recipe.cookTimeHours = 2;
-        //    recipe.cookTimeMinutes = 5;
-        //    recipe.ingredients = CreateIngredientList();
-        //    recipe.directions = CreateDirectionsList();
+        
                 
         
 
-            displayRecipeInfo("Recipe Name: ", recipe.recipeName, 1, 100);
-            displayRecipeInfo("Recipe ID: ", recipe.recipeID.ToString(), 2, 100);
-            displayRecipeInfo("Category: ", recipe.category,3,100);
-            displayRecipeInfo("Description: ", recipe.description,4,100);
-            displayRecipeInfo("Prep Time: ", displayPrepTime(),1,400);
-            displayRecipeInfo("Cook Time: ", displayCookTime(),2,400);
-            displayRecipeInfo("Oven Temp: ", recipe.ovenTemp.ToString(),3,400);
-            if(recipe.description.Length > 82)
+            displayRecipeInfo("Recipe Name: ", recipe.recipeName, 1, 1);
+            displayRecipeInfo("Recipe ID: ", recipe.recipeID.ToString(), 2, 1);
+            displayRecipeInfo("Category: ", recipe.category,3,1);
+            displayRecipeInfo("Description: ", recipe.description,4,1);
+            displayRecipeInfo("Prep Time: ", displayPrepTime(),1,500);
+            displayRecipeInfo("Cook Time: ", displayCookTime(),2,500);
+            displayRecipeInfo("Oven Temp: ", recipe.ovenTemp.ToString(),3,500);
+            if (recipe.description != null)
             {
-                increaseX = recipe.description.Length / 82;
-                x = x + increaseX;
+                if (recipe.description.Length > 82)
+                {
+                    increaseX = recipe.description.Length / 82;
+                    x = x + increaseX;
+                }
             }
-            
-            
-            CreateLabel("----------------------------------------------------------------------------------------------------" +
-                "----------------------------------------------------------------", x, 100);
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 500; i++)
+            {
+                sb.Append("-");
+            }
+            CreateLabel(sb.ToString(), x, 1);
             x++;
-            CreateLabel("Ingredients: ", x, 100);
-            CreateLabel("Directions: ", x, 350);
+            CreateLabel("Ingredients: ", x, 1);
+            CreateLabel(sb.ToString(), x + 7, 1);
+            
+            CreateLabel("Directions: ", x+8, 1);
             x++;
-            ingredientControl = directionControl = x;
+            ingredientControl = x;
 
 
 
@@ -116,26 +115,47 @@ namespace MyRecipesApp
             //CreateLabel("Recipe ID: ", recipe.recipeID.ToString(), leftControl, 100);
             //CreateLabel("Recipe Category: ", recipe.category, leftControl, 100);
             //CreateLabel("Recipe Description: ", recipe.description, leftControl, 100);
-
+            int y = 15;
 
             foreach (Ingredient ingredient in recipe.ingredients)
             {
-                StringBuilder printIngredient = new StringBuilder();
-                printIngredient.Append($"{ingredient.amount}" + " ");
-                printIngredient.Append($"{ingredient.units}" + " ");
-                printIngredient.Append($"{ingredient.ingredientName}" + " ");
+                if (ingredientControl > 12)
+                {
+                    if (y == 300)
+                    {
+                        y = 600;
+                        ingredientControl = x;
+                    }
+                    else
+                    {
+                        y = 300;
+                        ingredientControl = x;
+                    }
+                }
+                else
+                {
+                    string ingredientString = ingredient.amount.ToString() + " " + ingredient.units + " " + ingredient.ingredientName;
+                    //StringBuilder printIngredient = new StringBuilder();
+                    //printIngredient.Append($"{ingredient.amount}" + " ");
+                    //printIngredient.Append($"{ingredient.units}" + " ");
+                    //printIngredient.Append($"{ingredient.ingredientName}" + " ");
 
-                displayList(printIngredient.ToString(), ingredientControl, 150);
-                ingredientControl++;
+                    displayList(ingredientString, ingredientControl, y);
+                    ingredientControl++;
+                }
             }
+
+            
+            directionControl = 15;
             foreach (Directions direction in recipe.directions)
             {
-                StringBuilder printDirection = new StringBuilder();
-                printDirection.Append($"{direction.directionNumber.ToString()}" + ". ");
-                printDirection.Append($"{direction.direction}");
+                string directionString = direction.directionNumber.ToString() + ". " + direction.direction;
+                //StringBuilder printDirection = new StringBuilder();
+                //printDirection.Append($"{direction.directionNumber.ToString()}" + ". ");
+                //printDirection.Append($"{direction.direction}");
                 
 
-                displayList(printDirection.ToString(), directionControl, 400);
+                displayDirectionList(directionString, directionControl, 15);
                 directionControl++;
             }
         }
@@ -172,9 +192,23 @@ namespace MyRecipesApp
             label.Left = y;
             label.Text = listItem;
             label.AutoSize = true;
+            label.MaximumSize = new Size(300, 0);
             
 
             
+        }
+        public void displayDirectionList(string listItem, int x, int y)
+        {
+            Label label = new Label();
+            this.Controls.Add(label);
+            label.Top = x * 25;
+            label.Left = y;
+            label.Text = listItem;
+            label.AutoSize = true;
+            label.MaximumSize = new Size(900, 0);
+
+
+
         }
         public void CreateLabel(string labelText, int x, int y)
         {
@@ -184,7 +218,7 @@ namespace MyRecipesApp
             label.Left = y;
             label.Text = labelText;
             label.AutoSize = true;
-            label.MaximumSize = new Size(500, 0);
+            //label.MaximumSize = new Size(500, 0);
 
         }
 
@@ -194,20 +228,26 @@ namespace MyRecipesApp
             //string docpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             //File.WriteAllText(Path.Combine(docpath, "recipe.xml"), xml);
 
-            Stream myStream;
+            //Stream myStream;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
-            saveFileDialog1.Filter = "xml files (*.xml)|*.xml|txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog1.Filter = "XML File (*.xml)|*.xml";
+            saveFileDialog1.FileName = recipe.recipeName + ".xml";
             saveFileDialog1.FilterIndex = 2;
             saveFileDialog1.RestoreDirectory = true;
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if ((myStream = saveFileDialog1.OpenFile()) != null)
-                {
-                    // Code to write the stream goes here.
-                    myStream.Close();
-                }
+                //if ((myStream = saveFileDialog1.OpenFile()) != null)
+                
+                    using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
+                    {
+                        sw.WriteLine(xml);
+
+                    }
+
+                    //myStream.Close();
+                
             }
         }
 
@@ -217,6 +257,15 @@ namespace MyRecipesApp
             this.Hide();
             form.ShowDialog();
             this.Close();
+        }
+
+        private void btn_Back_Click(object sender, EventArgs e)
+        {
+            AddDirectionsForm addDirectionsForm = new AddDirectionsForm(recipe, dataSet);
+            this.Hide();
+            addDirectionsForm.ShowDialog();
+            this.Close();
+
         }
 
         public static string GetXMLFromObject(object o)

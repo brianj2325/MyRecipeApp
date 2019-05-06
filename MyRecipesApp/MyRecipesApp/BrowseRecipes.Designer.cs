@@ -36,6 +36,7 @@
             this.txt_SearchBox = new System.Windows.Forms.TextBox();
             this.btn_Search = new System.Windows.Forms.Button();
             this.btn_AddRecipe = new System.Windows.Forms.Button();
+            this.btn_ViewRecipe = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_BrowseRecipes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -113,7 +114,7 @@
             // 
             // btn_AddRecipe
             // 
-            this.btn_AddRecipe.Location = new System.Drawing.Point(217, 602);
+            this.btn_AddRecipe.Location = new System.Drawing.Point(491, 602);
             this.btn_AddRecipe.Name = "btn_AddRecipe";
             this.btn_AddRecipe.Size = new System.Drawing.Size(123, 26);
             this.btn_AddRecipe.TabIndex = 7;
@@ -121,11 +122,22 @@
             this.btn_AddRecipe.UseVisualStyleBackColor = true;
             this.btn_AddRecipe.Click += new System.EventHandler(this.btn_AddRecipe_Click);
             // 
+            // btn_ViewRecipe
+            // 
+            this.btn_ViewRecipe.Location = new System.Drawing.Point(199, 602);
+            this.btn_ViewRecipe.Name = "btn_ViewRecipe";
+            this.btn_ViewRecipe.Size = new System.Drawing.Size(123, 23);
+            this.btn_ViewRecipe.TabIndex = 8;
+            this.btn_ViewRecipe.Text = "View Recipe";
+            this.btn_ViewRecipe.UseVisualStyleBackColor = true;
+            this.btn_ViewRecipe.Click += new System.EventHandler(this.btn_ViewRecipe_Click);
+            // 
             // BrowseRecipes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 640);
+            this.Controls.Add(this.btn_ViewRecipe);
             this.Controls.Add(this.btn_AddRecipe);
             this.Controls.Add(this.btn_Search);
             this.Controls.Add(this.txt_SearchBox);
@@ -152,5 +164,6 @@
         private System.Windows.Forms.TextBox txt_SearchBox;
         private System.Windows.Forms.Button btn_Search;
         private System.Windows.Forms.Button btn_AddRecipe;
+        private System.Windows.Forms.Button btn_ViewRecipe;
     }
 }

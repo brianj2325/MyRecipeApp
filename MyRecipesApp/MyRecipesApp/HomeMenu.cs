@@ -23,7 +23,7 @@ namespace MyRecipesApp
 
         private void btn_AddRecipe_Click(object sender, EventArgs e)
         {
-            AddRecipeForm addRecipe = new AddRecipeForm();
+            AddRecipeForm addRecipe = new AddRecipeForm(null);
             this.Hide();
             addRecipe.ShowDialog();
             this.Close();

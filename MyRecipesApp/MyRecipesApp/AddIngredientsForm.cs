@@ -20,9 +20,14 @@ namespace MyRecipesApp
         DataTable ingredientTable = new DataTable("ingredientTable");
         public DataSet RecipeDataSet;
         int ingredientID;
+        int rowControl = 4;
+        int columnControl = 1;
         
         Recipe recipe;
         List<Ingredient> ingredients = new List<Ingredient>();
+        List<Label> ingredientLabels = new List<Label>();
+        List<Button> buttons = new List<Button>();
+        
 
 
         public AddIngredientsForm(Recipe recipe, DataSet dataSet)
@@ -31,39 +36,66 @@ namespace MyRecipesApp
 
             RecipeDataSet = dataSet;
             this.recipe = recipe;
-            
-           
+            //frm = addRecipeForm;
+            if (recipe.ingredients != null)
+            {
+                this.ingredients = recipe.ingredients;
+                DisplayIngredients(); 
+            }
 
-            CreateTable();
-            CreateDisplayTable();
+
+            if (!dataSet.Tables.Contains("ingredientTable"))
+            {
+
+                CreateTable();
+            }
+            //CreateDisplayTable();
 
             lbl_RecipeID.Text = recipe.recipeID.ToString();
 
-            lbl_RecipeName.Text = recipe.recipeName;
+           
         }
 
         private void btn_AddIngredient_Click(object sender, EventArgs e)
         {
             Ingredient ingredient = new Ingredient();
 
-            
-            ingredient.ingredientName = txt_IngredientName.Text;
-           
-            if (cmb_Amount2.Text == "0")
-            {
-                ingredient.amount = cmb_Amount1.Text;
-            }
-            else
-            {
-                ingredient.amount = cmb_Amount1.Text + " - " + cmb_Amount2.Text;
-            }
-            
-            ingredient.units = cmb_Units.Text;
-            ingredients.Add(ingredient);
-            updateTable(ingredient);
+            //if (string.IsNullOrWhiteSpace(txt_IngredientName.Text))
+            //{
+            //    MessageBox.Show("Please enter an ingredient name");
+            //}
+            //else
+            //{
+                ingredient.ingredientName = txt_IngredientName.Text;
 
-            clearIngredient();
-            DisplayIngredients();
+                if (cmb_Amount2.Text == "0")
+                {
+                    ingredient.amount = cmb_Amount1.Text;
+                }
+                else if (cmb_Amount1.Text == "0")
+                {
+                    ingredient.amount = cmb_Amount2.Text;
+                }
+                else
+                {
+                    ingredient.amount = cmb_Amount1.Text + " - " + cmb_Amount2.Text;
+                }
+
+                if (cmb_Units.Text == "Egg")
+                {
+                    ingredient.units = "";
+                    ingredient.amount = cmb_Amount1.Text;
+                }
+                else
+                { ingredient.units = cmb_Units.Text; }
+
+
+                ingredients.Add(ingredient);
+
+
+                clearIngredient();
+                DisplayIngredients();
+            //}
 
 
         }
@@ -76,23 +108,7 @@ namespace MyRecipesApp
             cmb_Units.Text = "Cups";
 
         }
-        //private void AddRow()
-        //{
 
-        //    double totalAmount = Convert.ToDouble(cmb_Amount1.Text) + FractionToDouble(cmb_Amount2.Text);
-
-        //    DataRow row = RecipeDataSet.Tables["ingredientTable"].NewRow();
-        //    row["ingredientID"] = GetIngredientID();
-        //    row["ingredientName"] = txt_IngredientName.Text;
-        //    row["ingredientAmount"] = totalAmount;
-        //    row["ingredientUnits"] = cmb_Units.Text;
-        //    row["recipeID"] = lbl_RecipeID.Text;
-
-        //    ingredientTable.Rows.Add(row);
-
-        //    updateTable();
-
-        //}
 
         private void CreateTable()
         {
@@ -106,31 +122,35 @@ namespace MyRecipesApp
 
         }
 
-        private void updateTable(Ingredient ingredient)
+        private void updateTable(List<Ingredient> ingredients)
         {
-
-            using (SqlConnection sqlConn = new SqlConnection(connectionString))
+            foreach (Ingredient ingredient in ingredients)
             {
-                
-                sqlConn.Open();
-                var sqlQuery = "select * from IngredientTable";
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, sqlConn);
 
-                dataAdapter.Fill(ingredientTable);
-                DataRow row = RecipeDataSet.Tables["ingredientTable"].NewRow();
-                ingredientID = GetIngredientID();
 
-                
-                row["ingredientID"] = ingredientID;
-                row["recipeID"] = recipe.recipeID;
-                row["ingredientName"] = ingredient.ingredientName;
-                row["ingredientAmount"] = ingredient.amount;
-                row["ingredientUnits"] = ingredient.units;
-                RecipeDataSet.Tables["ingredientTable"].Rows.Add(row);
+                using (SqlConnection sqlConn = new SqlConnection(connectionString))
+                {
 
-                new SqlCommandBuilder(dataAdapter);
-                dataAdapter.Update(ingredientTable);
-                sqlConn.Close();
+                    sqlConn.Open();
+                    var sqlQuery = "select * from IngredientTable";
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, sqlConn);
+
+                    dataAdapter.Fill(ingredientTable);
+                    DataRow row = RecipeDataSet.Tables["ingredientTable"].NewRow();
+                    ingredientID = GetIngredientID();
+
+
+                    row["ingredientID"] = ingredientID;
+                    row["recipeID"] = recipe.recipeID;
+                    row["ingredientName"] = ingredient.ingredientName;
+                    row["ingredientAmount"] = ingredient.amount;
+                    row["ingredientUnits"] = ingredient.units;
+                    RecipeDataSet.Tables["ingredientTable"].Rows.Add(row);
+
+                    new SqlCommandBuilder(dataAdapter);
+                    dataAdapter.Update(ingredientTable);
+                    sqlConn.Close();
+                }
             }
 
         }
@@ -159,40 +179,96 @@ namespace MyRecipesApp
             return ingredientID;
         }
 
-        public void CreateDisplayTable()
-        {
-            recipeIngredientTable.Columns.Add("ingredientID", Type.GetType("System.Int32"));
-            recipeIngredientTable.Columns.Add("recipeID", Type.GetType("System.Int32"));
-            recipeIngredientTable.Columns.Add("ingredientName", Type.GetType("System.String"));
-            recipeIngredientTable.Columns.Add("ingredientAmount", Type.GetType("System.String"));
-            recipeIngredientTable.Columns.Add("ingredientUnits", Type.GetType("System.String"));
-        }
         private void DisplayIngredients()
         {
-            if (recipeIngredientTable != null)
+            int r = rowControl;
+            int c = columnControl;
+            
+            
+           foreach (Ingredient i in ingredients)
             {
-                recipeIngredientTable.Clear();
+                string ingredientString = i.amount + " " + i.units + " " + i.ingredientName;
+                if (r > 15)
+                {
+                    if (c == 350)
+                    { break; }
+                    else
+                    {
+                        r = 4;
+                        c = 350;
+                    }
+                    
+                }
+
+                else
+                {
+                    CreateLabel(ingredientString, "lbl_Ingredient", r, c);
+                    CreateButton("Delete", r, c + 250, i);
+                    r++;
+
+                }
+    
             }
-            using (SqlConnection sqlConn = new SqlConnection(connectionString))
-            {
-                sqlConn.Open();
-                var sqlQuery = "select * from IngredientTable WHERE recipeID=" + recipe.recipeID;
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, sqlConn);
-
-                dataAdapter.Fill(recipeIngredientTable);
-            }
-
-
-                dgv_Ingredients.DataSource = recipeIngredientTable;
-                dgv_Ingredients.Columns["recipeID"].Visible = false;
-                dgv_Ingredients.Columns["ingredientID"].Visible = false;
-                
+            
+      
             
         }
 
+        public void CreateLabel(string labelText,string labelName, int x, int y)
+        {
+            Label label = new Label();
+            this.Controls.Add(label);
+            label.Name = labelName + x.ToString();
+            label.Top = x * 25;
+            label.Left = y;
+            label.Text = labelText;
+            label.AutoSize = true;
+            label.MaximumSize = new Size(300, 0);
+            ingredientLabels.Add(label);
 
+        }
 
-            double FractionToDouble(string fraction)
+        public void ClearLabels()
+        {
+            foreach (Label label in ingredientLabels)
+            {
+                this.Controls.Remove(label);
+            }
+            foreach (Button button in buttons)
+            {
+                this.Controls.Remove(button);
+            }
+
+            
+        }
+        public void CreateButton(string buttonText, int x, int y, Ingredient ingredient)
+        {
+            Button button = new Button();
+            this.Controls.Add(button);
+            button.Name = buttonText + x.ToString();
+            button.Top = x * 25;
+            button.Left = y;
+            button.Text = buttonText;
+            button.AutoSize = true;
+            button.Click += (sender, args) =>
+            {
+                var labelToRemove = this.Controls["lbl_Ingredient"];
+                
+                this.Controls.Remove(labelToRemove);
+                var buttonToRemove = this.Controls[buttonText+x.ToString()];
+                this.Controls.Remove(buttonToRemove);
+                ingredients.Remove(ingredient);
+                ClearLabels();
+                DisplayIngredients();
+                
+                
+            };
+            buttons.Add(button);
+
+        }
+
+        
+        double FractionToDouble(string fraction)
             {
                 double result;
 
@@ -235,6 +311,7 @@ namespace MyRecipesApp
             private void btn_AddDirections_Click(object sender, EventArgs e)
             {
             recipe.ingredients = ingredients;
+            updateTable(ingredients);
             AddDirectionsForm addDirectionsForm = new AddDirectionsForm(recipe, RecipeDataSet);
             this.Hide();
             addDirectionsForm.ShowDialog();
@@ -243,10 +320,12 @@ namespace MyRecipesApp
 
         private void btn_Back_Click(object sender, EventArgs e)
         {
-            //AddRecipeForm addRecipe;
-            //this.Hide();
-            //addRecipe.ShowDialog();
-            //this.Close();
+            AddRecipeForm addRecipe = new AddRecipeForm(recipe);
+            this.Hide();
+            addRecipe.ShowDialog();
+            this.Close();
+            this.Hide();
+            //frm.Show();
         }
     }
 }

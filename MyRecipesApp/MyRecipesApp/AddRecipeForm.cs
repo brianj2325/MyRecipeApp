@@ -17,47 +17,61 @@ namespace MyRecipesApp
         DataSet recipeData = new DataSet("RecipeData");
         DataTable recipeTable = new DataTable("recipeTable");
         int recipeID;
-        Recipe recipe;
+        Recipe recipe = new Recipe();
+        
 
 
 
-        public AddRecipeForm()
+        public AddRecipeForm(Recipe recipe)
         {
             InitializeComponent();
+            //ingredientsForm = new AddIngredientsForm(this);
+            if (recipe != null)
+            {
+                txt_RecipeName.Text = recipe.recipeName;
+                txt_Description.Text = recipe.description;
+                cmb_Category.Text = recipe.category;
+            }
 
         }
 
         private void btn_Next_Click(object sender, EventArgs e)
         {
-            
-            updateTable();
             recipe = CreateRecipe();
+            updateTable();
+            recipe.recipeID = recipeID;
+            
+            
 
             AddIngredientsForm addIngredientsForm = new AddIngredientsForm(recipe, recipeData);
-            addIngredientsForm.RecipeDataSet = this.recipeData;
+            //addIngredientsForm.RecipeDataSet = this.recipeData;
             this.Hide();
+            //ingredientsForm.Show();
             addIngredientsForm.ShowDialog();
             this.Close();
         }
 
         private Recipe CreateRecipe()
         {
-            Recipe Recipe = new Recipe();
-            Recipe.recipeID = GetRecipeID();
-            Recipe.recipeName = txt_RecipeName.Text;
-            Recipe.category = cmb_Category.Text;
-            Recipe.description = txt_Description.Text;
+            
+            //Recipe.recipeID = GetRecipeID();
+            recipe.recipeName = txt_RecipeName.Text;
+            recipe.category = cmb_Category.Text;
+            recipe.description = txt_Description.Text;
 
-            return Recipe;
+            return recipe;
 
         }
 
 
         private void updateTable()
         {
-            recipeTable = recipeData.Tables.Add("recipeTable");
-            CreateTable();
-
+            if (!recipeData.Tables.Contains("recipeTable"))
+            {
+                recipeTable = recipeData.Tables.Add("recipeTable");
+                CreateTable();
+            }
+            
             using (SqlConnection sqlConn = new SqlConnection(connectionString))
             {
                 sqlConn.Open();
@@ -65,12 +79,14 @@ namespace MyRecipesApp
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, sqlConn);
 
                 dataAdapter.Fill(recipeTable);
+
+                recipeID = GetRecipeID();
                 DataRow row = recipeData.Tables["recipeTable"].NewRow();
 
-                row["recipeID"] = GetRecipeID();
-                row["recipeName"] = txt_RecipeName.Text;
-                row["recipeCategory"] = cmb_Category.Text;
-                row["recipeDescription"] = txt_Description.Text;
+                row["recipeID"] = recipeID;
+                row["recipeName"] = recipe.recipeName;
+                row["recipeCategory"] = recipe.category;
+                row["recipeDescription"] = recipe.description;
                 recipeData.Tables["recipeTable"].Rows.Add(row);
 
                 new SqlCommandBuilder(dataAdapter);
@@ -111,7 +127,9 @@ namespace MyRecipesApp
             {
                 if (recipeTable.Rows.Count > 0)
                 {
-                    recipeID = Convert.ToInt32(recipeTable.Rows[recipeTable.Rows.Count - 1]["recipeID"]);
+                    
+
+                    recipeID = Convert.ToInt32(recipeTable.Rows[recipeTable.Rows.Count-1]["recipeID"]);
                     recipeID++;
 
                 }
